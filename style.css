@@ -1,1 +1,17 @@
-/* Caso queira utilizar framework como Bootstrap para estilização, pode utilizar. Basta ignoar esse arquivo */
+body {
+  background-color: #f8f9fa;
+}
+ 
+.badge-count {
+  font-size: .75rem;
+}
+ 
+#toast-msg {
+  min-height: 1.4rem;
+  font-size: .875rem;
+}
+ 
+#table-state td {
+  color: #6c757d;
+}
+ 
