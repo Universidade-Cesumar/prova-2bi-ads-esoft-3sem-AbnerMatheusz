@@ -10,6 +10,7 @@ const tableState  = document.getElementById("table-state");
 const badgeCount  = document.getElementById("badge-count");
 const statusCount = document.getElementById("status-count");
 const toastRetirada = document.getElementById("toast-retirada");
+const inputRetirada = document.getElementById("input-retirada");
 
 // Retorna true se a operação de retirada é válida, false caso contrário
 function validarRetirada(estoqueAtual, quantidadeRetirada) {
