@@ -74,7 +74,7 @@ materiais.forEach(item => {
   });
 
   // Captura os cliques nos botões gerados dinamicamente
-  document.querySelectorAll(".btn-baoxar").forEach(btn => {
+  document.querySelectorAll(".btn-baixar").forEach(btn => {
     btn.addEventListener("click", () => {
       const id      = btn.dataset.id;
       const estoque = parseInt(btn.dataset.estoque, 10);
@@ -85,7 +85,7 @@ materiais.forEach(item => {
   document.querySelectorAll(".btn-excluir").forEach(btn => {
     btn.addEventListener("click", () => {
       handleExcluir(btn.dataset.id);
-    })
+    });
   });
 
   updateCount(materiais.length);
