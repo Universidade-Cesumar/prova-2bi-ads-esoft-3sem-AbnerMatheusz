@@ -1,15 +1,21 @@
 
 const API_URL = "https://6a29e320f59cb8f65f1db3ab.mockapi.io/api/v1/materiais";
 
-const inputNome   = document.getElementById("input-nome");        // id="input-nome"
-const inputQtd    = document.getElementById("input-quantidade");  // id="input-quantidade"
-const btnCad      = document.getElementById("btn-cadastrar");     // id="btn-cadastrar"
-const tbody       = document.getElementById("lista-materiais");   // id="lista-materiais"
-
+const inputNome   = document.getElementById("input-nome");        
+const inputQtd    = document.getElementById("input-quantidade");
+const btnCad      = document.getElementById("btn-cadastrar"); 
+const tbody       = document.getElementById("lista-materiais");   
 const toastMsg    = document.getElementById("toast-msg");
 const tableState  = document.getElementById("table-state");
 const badgeCount  = document.getElementById("badge-count");
 const statusCount = document.getElementById("status-count");
+
+// Retorna true se a operação de retirada é válida, false caso contrário
+function validarRetirada(estoqueAtual, quantidadeRetirada) {
+  if (quantidadeRetirada <= 0) return false;          // não permite retirar oq nao existe
+  if (quantidadeRetirada > estoqueAtual) return false; // não permite retirar mais do que já tem
+  return true;
+}
 
 function showFeedback(msg, type = "secondary") {
   toastMsg.className = `mt-2 mb-0 text-${type} small`;
