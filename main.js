@@ -50,12 +50,25 @@ function renderRows(materiais) {
     return;
   }
 
-  materiais.forEach(item => {
+materiais.forEach(item => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td class="text-muted small font-monospace">#${String(item.id).padStart(4, "0")}</td>
       <td class="fw-medium">${escapeHtml(item.nome ?? item.name ?? "—")}</td>
       <td class="text-end font-monospace">${item.quantidade ?? item.quantity ?? 0}</td>
+      <td class="text-center">
+        <button
+          class="btn btn-warning btn-sm btn-baixar me-1"
+          data-id="${item.id}"
+          data-estoque="${item.quantidade ?? item.quantity ?? 0}">
+          📤 Baixa
+        </button>
+        <button
+          class="btn btn-danger btn-sm btn-excluir"
+          data-id="${item.id}">
+          🗑️ Excluir
+        </button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
