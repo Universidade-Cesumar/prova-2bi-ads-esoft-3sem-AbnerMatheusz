@@ -200,5 +200,21 @@ async function handleBaixa(id, estoqueAtual) {
   }
 }
 
+// excluir material 
+async function handleExcluir(id) {
+  if (!confirm("Tem certeza que deseja excluir este material?")) return;
+
+  try {
+    const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    showFeedback(toastMsg, " Material excluído com sucesso!", "success");
+    await loadMateriais();
+  } catch (err) {
+    showFeedback(toastMsg, ` Erro ao excluir: ${err.message}`, "danger");
+    console.error("DELETE falhou:", err);
+  }
+}
+
 
 loadMateriais();
