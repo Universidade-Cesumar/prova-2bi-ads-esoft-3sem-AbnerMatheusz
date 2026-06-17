@@ -73,6 +73,21 @@ materiais.forEach(item => {
     tbody.appendChild(tr);
   });
 
+  // Captura os cliques nos botões gerados dinamicamente
+  document.querySelectorAll(".btn-baoxar").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id      = btn.dataset.id;
+      const estoque = parseInt(btn.dataset.estoque, 10);
+      handleBaixa(id, estoque);
+    });
+  });
+
+  document.querySelectorAll(".btn-excluir").forEach(btn => {
+    btn.addEventListener("click", () => {
+      handleExcluir(btn.dataset.id);
+    })
+  });
+
   updateCount(materiais.length);
 }
 
