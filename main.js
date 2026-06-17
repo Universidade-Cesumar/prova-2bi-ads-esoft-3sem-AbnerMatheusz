@@ -17,6 +17,8 @@ function validarRetirada(estoqueAtual, quantidadeRetirada) {
   return true;
 }
 
+
+
 function showFeedback(msg, type = "secondary") {
   toastMsg.className = `mt-2 mb-0 text-${type} small`;
   toastMsg.textContent = msg;
@@ -121,12 +123,12 @@ async function cadastrarMaterial() {
   const quantidade = parseInt(inputQtd.value, 10);
 
   if (!nome) {
-    showFeedback("⚠ Informe o nome do material.", "danger");
+    showFeedback(" Informe o nome do material.", "danger");
     inputNome.focus();
     return;
   }
   if (isNaN(quantidade) || quantidade < 0) {
-    showFeedback("⚠ Informe uma quantidade válida (≥ 0).", "danger");
+    showFeedback(" Informe uma quantidade válida (≥ 0).", "danger");
     inputQtd.focus();
     return;
   }
@@ -148,10 +150,10 @@ async function cadastrarMaterial() {
 
     inputNome.value = "";
     inputQtd.value = "";
-    showFeedback(`✔ "${nome}" cadastrado com sucesso!`, "success");
+    showFeedback(`foi "${nome}" cadastrado com sucesso!`, "success");
     await loadMateriais();
   } catch (err) {
-    showFeedback(`✖ Erro ao cadastrar: ${err.message}`, "danger");
+    showFeedback(` Erro ao cadastrar: ${err.message}`, "danger");
     console.error("POST falhou:", err);
   } finally {
     btnCad.disabled = false;
@@ -166,6 +168,36 @@ btnCad.addEventListener("click", cadastrarMaterial);
     if (e.key === "Enter") cadastrarMaterial();
   })
 );
+
+// baixa de material
+async function handleBaixa(id, estoqueAtual) {
+  const quantidade = parseInt(inputRetirada.value, 10);
+
+  if (!validarRetirada(estoqueAtual, quantidade)) {
+    showFeedback(toastRetirada, "Quantidade inválida ou maior que o estoque disponível.", "danger");
+    inputRetirada.focus();
+    return;
+  }
+
+  showFeedback(toastRetirada, "Registrando baixa…", "secondary");
+
+  try {
+    const novaQtd = estoqueAtual - quantidade;
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantidade: novaQtd }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    inputRetirada.value = "";
+    showFeedback(toastRetirada, `Baixa de ${quantidade} unidade(s) registrada!`, "success");
+    await loadMateriais();
+  } catch (err) {
+    showFeedback(toastRetirada, `Erro ao registrar baixa: ${err.message}`, "danger");
+    console.error("PUT falhou:", err);
+  }
+}
 
 
 loadMateriais();
