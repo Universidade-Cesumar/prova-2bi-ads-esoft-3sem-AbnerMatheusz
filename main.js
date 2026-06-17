@@ -14,6 +14,7 @@ const inputRetirada = document.getElementById("input-retirada");
 
 // Retorna true se a operação de retirada é válida, false caso contrário
 function validarRetirada(estoqueAtual, quantidadeRetirada) {
+  if (isNaN(quantidadeRetirada)) return false;  // impede que  usuario de baixa em todos os itens de uma vez. *Bug que achei testando*
   if (quantidadeRetirada <= 0) return false;          // não permite retirar oq nao existe
   if (quantidadeRetirada > estoqueAtual) return false; // não permite retirar mais do que já tem
   return true;
