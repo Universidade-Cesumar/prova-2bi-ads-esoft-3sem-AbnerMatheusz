@@ -11,6 +11,8 @@ const badgeCount  = document.getElementById("badge-count");
 const statusCount = document.getElementById("status-count");
 const toastRetirada = document.getElementById("toast-retirada");
 const inputRetirada = document.getElementById("input-retirada");
+const inputBusca = document.getElementById("input-busca");
+let materiaisCache = [];
 
 // Retorna true se a operação de retirada é válida, false caso contrário
 function validarRetirada(estoqueAtual, quantidadeRetirada) {
@@ -108,6 +110,7 @@ async function loadMateriais() {
     const res = await fetch(API_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
+    materiaisCache = data;
     renderRows(data);
   } catch (err) {
     tableState.style.display = "block";
@@ -163,6 +166,14 @@ async function cadastrarMaterial() {
     btnCad.innerHTML = `＋ Cadastrar`;
   }
 }
+
+btnCad.addEventListener("click", cadastrarMaterial);
+
+[inputNome, inputQtd].forEach(el =>
+  el.addEventListener("keydown", e => {
+    if (e.key === "Enter") cadastrarMaterial();
+  })
+);
 
 btnCad.addEventListener("click", cadastrarMaterial);
 
