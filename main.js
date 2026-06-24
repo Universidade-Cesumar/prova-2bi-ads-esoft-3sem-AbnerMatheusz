@@ -12,6 +12,7 @@ const statusCount = document.getElementById("status-count");
 const toastRetirada = document.getElementById("toast-retirada");
 const inputRetirada = document.getElementById("input-retirada");
 const inputBusca = document.getElementById("input-busca");
+const totalItens = document.getElementById("total-itens");
 let materiaisCache = [];
 
 // Retorna true se a operação de retirada é válida, false caso contrário
@@ -33,6 +34,7 @@ function updateCount(n) {
   const label = `${n} ${n === 1 ? "item" : "itens"}`;
   badgeCount.textContent = label;
   statusCount.textContent = n;
+  totalItens.textContent = n;
 }
 
 function escapeHtml(str) {
@@ -175,13 +177,13 @@ btnCad.addEventListener("click", cadastrarMaterial);
   })
 );
 
-btnCad.addEventListener("click", cadastrarMaterial);
-
-[inputNome, inputQtd].forEach(el =>
-  el.addEventListener("keydown", e => {
-    if (e.key === "Enter") cadastrarMaterial();
-  })
-);
+inputBusca.addEventListener("input", () => {
+  const termo = inputBusca.value.toLowerCase().trim();
+  const filtrados = materiaisCache.filter(item =>
+    (item.nome ?? item.name ?? "").toLowerCase().includes(termo)
+  );
+  renderRows(filtrados);
+});
 
 // baixa de material
 async function handleBaixa(id, estoqueAtual) {
