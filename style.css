@@ -14,4 +14,13 @@ body {
 #table-state td {
   color: #6c757d;
 }
+
+.estoque-critico {
+  background-color: #f8d7da !important;
+}
+
+.estoque-critico td {
+  color: #842029;
+  font-weight: 600;
+}
  

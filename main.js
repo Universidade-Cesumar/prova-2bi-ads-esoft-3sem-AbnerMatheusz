@@ -61,6 +61,11 @@ function renderRows(materiais) {
 
 materiais.forEach(item => {
     const tr = document.createElement("tr");
+    const quantidade = item.quantidade ?? item.quantity ?? 0;
+
+    if (quantidade < 10) {
+      tr.classList.add("estoque-critico");
+    }
     tr.innerHTML = `
       <td class="text-muted small font-monospace">#${String(item.id).padStart(4, "0")}</td>
       <td class="fw-medium">${escapeHtml(item.nome ?? item.name ?? "—")}</td>
